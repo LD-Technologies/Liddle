@@ -1,0 +1,69 @@
+html,body,.page {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+.page {
+    position:relative;
+}
+.navbar {
+    height:40px;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+}
+.navbar-inner {
+    border-radius:0;
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
+}
+.navbar .navbar-inner .container {
+    min-width: 895px; 
+}
+.content {
+    height:100%;
+    width:100%;
+}
+.nav li i {
+    vertical-align:middle;
+    opacity:0.4;
+}
+.nav li:hover i {
+    opacity:1;
+}
+.brand {
+    width:168px;
+}
+.brand small {
+    font-size:10px;
+    color:#666;
+}
+.content .sidebar {
+    height:100%;
+    width:220px;
+    background-color:whiteSmoke;
+    float:left;
+}
+.content .sidebar .sidebar-inner {
+    padding:42px 2px 0 2px;
+}
+.content .main {
+    height:100%;
+    width:100%;
+}
+.content .main .main-inner {
+    padding:42px 2px 0 222px;
+}
+.accordion-inner {
+    background-color: white;
+}
+.accordion-heading a {
+    color: #222;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+.accordion-heading a:hover {
+    text-decoration: none;
+}​
