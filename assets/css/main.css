@@ -1,8 +1,20 @@
-html,body,.page {
+html,body,.page,.content, .content .main {
     height:100%;
     width:100%;
     margin:0;
     padding:0;
+}
+body {
+	overflow: hidden;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 .page {
     position:relative;
@@ -21,10 +33,6 @@ html,body,.page {
 }
 .navbar .navbar-inner .container {
     min-width: 895px; 
-}
-.content {
-    height:100%;
-    width:100%;
 }
 .nav li i {
     vertical-align:middle;
@@ -45,13 +53,11 @@ html,body,.page {
     width:220px;
     background-color:whiteSmoke;
     float:left;
+    padding: 0;
+    margin: 0;
 }
 .content .sidebar .sidebar-inner {
     padding:42px 2px 0 2px;
-}
-.content .main {
-    height:100%;
-    width:100%;
 }
 .content .main .main-inner {
     padding:42px 2px 0 222px;
@@ -66,4 +72,34 @@ html,body,.page {
 }
 .accordion-heading a:hover {
     text-decoration: none;
-}​
+}
+
+/* splitter */
+
+.splitter {
+ background-color: #666;
+ cursor: pointer;  
+}
+.splitter.vertical {
+ width: 12px;
+ height: 100%;    
+}
+.splitter.horizontal {
+ width: 100%;
+ height: 12px;
+}
+.pane, .splitter {
+ margin: 0;
+ padding: 0;
+ float: left;
+}
+.left.pane, .right.pane {
+ height: 100%;    
+}
+.top.pane, .bottom.pane {
+ width: 100%;    
+}
+.left .top { background-color: #aaa; }
+.left .bottom { background-color: #b5b5b5; }
+.right .top { background-color: #afafaf; }
+.right .bottom { background-color: #959595; }

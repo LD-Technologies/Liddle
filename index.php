@@ -15,7 +15,7 @@
 	
 </head>
 <body>
-<div class="page">
+<div class="page" id="page">
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
@@ -60,23 +60,37 @@
                 <div class="accordion" id="cm_sidebar">
                     <div class="accordion-group">
                         <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#cm_sidebar" href="#cm_incops">
-                                Select Framework <i class="icon-chevron-down pull-right"></i></a>
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#cm_sidebar" href="#cm_settings">
+                            General Settings <i class="icon-chevron-right pull-right"></i></a>
                         </div>
-                        <div id="cm_incops" class="accordion-body in">
+                        <div id="cm_settings" class="accordion-body in">
+                            <div class="accordion-inner">
+                                 <div class="control-group">
+									<label class="control-label" for="js_wrap">Include in</label>
+									<div class="controls">
+                                        <select name="js_wrap" id="js_wrap" class="input-medium">
+                                            <option value="h">document head</option>
+                                            <option value="b" selected="selected">document body</option>
+                                        </select>
+									</div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#cm_sidebar" href="#cm_incops">
+                                Frameworks <i class="icon-chevron-down pull-right"></i></a>
+                        </div>
+                        <div id="cm_incops" class="accordion-body collapse">
                             <div class="accordion-inner">
                                 <div class="control-group">
-                                    <label class="control-label" for="js_wrap">Include in</label>
+                                    <label class="control-label" for="js_lib">Framework</label>
                                     <div class="controls">
-                                        <select name="js_wrap" id="" class="input-medium">
-                                            <option value="h">document head</option>
-                                            <option value="b">document body</option>
-                                        </select>
-                                        <label class="control-label" for="js_lib">Framework</label>
                                         <select name="js_lib" id="js_lib" class="input-medium">
                                             <optgroup label="Mootools">
                                             <option value="96">Mootools 1.4.5 (compat)</option>
-                                            <option value="95" selected="selected">Mootools 1.4.5</option>
+                                            <option value="95">Mootools 1.4.5</option>
                                             <option value="63">Mootools 1.3.2 (compat)</option>
                                             <option value="62">Mootools 1.3.2</option>
                                             <option value="37">Mootools 1.2.5</option>
@@ -107,7 +121,7 @@
                                             <option value="10">Glow Core 1.7.0</option>
                                             </optgroup>
                                             <optgroup label="No-Library">
-                                            <option value="11">No-Library (pure JS)</option>
+                                            <option value="11" selected="selected">No-Library (pure JS)</option>
                                             </optgroup>
                                             <optgroup label="Dojo">
                                             <option value="94">Dojo 1.7.2</option>
@@ -184,8 +198,18 @@
             </div>
         </div>
         <div class="main">
-            <div class="main-inner">
-                 panes go here.
+            <div class="main-inner" id="main_inner">
+				<div class="left pane" id="left-pane">
+					<div class="top pane" id="left-top-pane"></div>
+					<div class="splitter horizontal" id="left-splitter-horizontal"></div>
+					<div class="bottom pane" id="left-bottom-pane"></div>
+				</div>
+				<div class="splitter vertical" id="splitter-vertical"></div>
+				<div class="right pane" id="right-pane">
+					<div class="top pane" id="right-top-pane"></div>
+					<div class="splitter horizontal" id="right-splitter-horizontal"></div>
+					<div class="bottom pane" id="right-bottom-pane"></div>
+				</div>
             </div>
         </div>
     </div>
@@ -193,5 +217,59 @@
 <script type="text/javascript" src="/assets/js/jquery.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-collapse.mod.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript">
+function make_vertical(elem) {
+	$('body').addClass('noselect');
+    return function(e) {
+		if( !(e.which & 1) ) { 
+			unbind_events();
+		}
+        var x = e.clientX-222, w = $('#main_inner').width();
+        x = (x > 64) ? (x > w - 12 - 64) ? w - 12 - 64 : x : 64;
+        var parent = $(elem.parentNode);
+        parent.children('.left.pane').css('width', x/w*100+'%');
+        parent.children('.right.pane').css('width', (w - x - 12)/w*100+'%');
+    };
+}
+function make_horizontal(elem) {
+	$('body').addClass('noselect');
+    return function(e) {
+		if( !(e.which & 1) ) { 
+			unbind_events();
+		}
+        var y = e.clientY-42, h = $('#main_inner').height();
+        y = (y > 64) ? (y > h - 12 - 64) ? h - 12 - 64 : y : 64;
+        var parent = $(elem.parentNode);
+        parent.children('.top.pane').css('height', y/h*100+'%');
+        parent.children('.bottom.pane').css('height', (h - y - 12)/h*100+'%');
+    };
+
+}
+function unbind_events() {
+	$('#main_inner').unbind('mousemove.splitter');
+	$('body').removeClass('noselect');
+}
+
+var container = $('#main_inner');
+container.css({
+	'height': ($('#page').height() - 42)/$('#page').height() * 100 + '%',
+	'width': ($('#page').width() - 222)/$('#page').width() * 100 + '%'
+});
+$('.splitter.vertical').on('mousedown', function(e) {
+    container.bind('mousemove.splitter', make_vertical(this));
+});
+$('.splitter.horizontal').on('mousedown', function(e) {
+    container.bind('mousemove.splitter', make_horizontal(this));
+});
+$('.top.pane, .bottom.pane').css({
+    'height': ((container.height() - 24) / (container.height() - 12) / 2) * 100 + '%'
+});
+$('.left.pane, .right.pane').css({
+    'width': ((container.width() - 24) / (container.width() - 12) / 2) * 100 + '%'
+});
+$(document).on("selectstart dragstart", function(e){
+    e.preventDefault();
+});
+</script>
 </body>
 </html>
